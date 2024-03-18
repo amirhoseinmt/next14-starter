@@ -57,6 +57,11 @@
   .buttons {
     justify-content: center;
   }
+
+  .brands {
+    width: 100%;
+    margin-left: 80px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -66,5 +71,6 @@
 
   .brands {
     width: 100%;
+    margin-left: 50px;
   }
 }

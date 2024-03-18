@@ -3,6 +3,7 @@
 import { useState } from "react";
 import styles from "./links.module.css";
 import NavLink from "./navLink/NavLink";
+import Image from "next/image";
 
 const links = [
   {
@@ -24,7 +25,7 @@ const links = [
 ];
 
 const Links = () => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   // TEMPORARY
   const session = true; // USER
@@ -32,7 +33,6 @@ const Links = () => {
 
   return (
     <div className={styles.container}>
-
       <div className={styles.links}>
         {links.map((link) => (
           <NavLink item={link} key={link.title} />
@@ -47,7 +47,13 @@ const Links = () => {
         )}
       </div>
 
-      <button className={styles.menuButton} onClick={() => setOpen((prev) => !prev)}>Menu</button>
+      <Image
+        className={styles.menuButton}
+        src="/menu.png"
+        width={30}
+        height={30}
+        onClick={() => setOpen((prev) => !prev)}
+      />
       {open && (
         <div className={styles.mobileLinks}>
           {links.map((link) => (
@@ -55,7 +61,6 @@ const Links = () => {
           ))}
         </div>
       )}
-
     </div>
   );
 };
