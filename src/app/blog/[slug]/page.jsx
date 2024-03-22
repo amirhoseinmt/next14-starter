@@ -1,36 +1,55 @@
 import Image from "next/image";
 import styles from "./singlePost.module.css";
+import PostUser from "@/components/postUser/postUser";
+import { Suspense } from "react";
+import { getPost } from "@/lib/data";
 
-const SinglePostPage = () => {
+// FETCH DATA WITH AN API
+// const getData = async (slug) => {
+//   const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${slug}`);
+
+//   if(!res.ok){
+//     throw new Error("Something went wrong")
+//   }
+
+//   return res.json()
+// }
+
+const SinglePostPage = async ({ params }) => {
+  const { slug } = params;
+
+  // FETCH DATA WITH AN API
+  // const post = await getData(slug);
+
+  // FETCH DATA WITHOUT AN API
+  const post = await getPost(slug);
+
   return (
     <div className={styles.container}>
       <div className={styles.imgContainer}>
-        <Image src="/amir.jpg" alt="" fill className={styles.img} />
+        <Image src="/amir.jpg" alt="User Image" fill className={styles.img} />
       </div>
       <div className={styles.textContainer}>
-        <h1 className={styles.title}>Title</h1>
+        <h1 className={styles.title}>{post?.title}</h1>
         <div className={styles.detail}>
           <Image
             src="/amir.jpg"
-            alt=""
+            alt="Avatar Image"
             className={styles.avatar}
             width={50}
             height={50}
           />
-          <div className={styles.detailText}>
-            <span className={styles.detailTitle}>Author</span>
-            <span className={styles.detailValue}>Terry Jefferson</span>
-          </div>
+          {post && (
+            <Suspense fallback={<div>Loading...</div>}>
+              <PostUser userId={post.userId} />
+            </Suspense>
+          )}
           <div className={styles.detailText}>
             <span className={styles.detailTitle}>Published</span>
             <span className={styles.detailValue}>01.01.2024</span>
           </div>
         </div>
-        <div className={styles.content}>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. At, ea
-          quibusdam. Maxime facilis odio officiis natus praesentium eum tenetur
-          ad molestiae, provident eos ea quidem.
-        </div>
+        <div className={styles.content}>{post.body}</div>
       </div>
     </div>
   );
